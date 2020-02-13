@@ -1,7 +1,6 @@
-A maze game where a random maze is generated each time you start the game.
+A maze game where a random maze is generated each time you start the game. DFS is used to randomly generate the maze
+by removing walls from a complete grid.
 
-Use W,A,S,D keys to move
+Game ends when the character reaches the goal mark.
 
-Games ends when green block reaches blue block.
-
-Still a work in progress.
+Still a work in progress. Menu and leaderboard coming soon

@@ -2,6 +2,9 @@ package random_maze_generator_game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public class Cell {
 
@@ -12,19 +15,25 @@ public class Cell {
 	private boolean bottom_wall = true;
 	private boolean left_wall = true;
 
-
-	private boolean end = false;
-
-	private int gridscale = 40;
-
+	private boolean end;
 	private boolean visited;
+
+	private BufferedImage end_mark;
 
 	public Cell(int xCoor, int yCoor) {
 
-		this.xCoor = xCoor * gridscale;
-		this.yCoor = yCoor * gridscale;
-		width = gridscale;
-		height = gridscale;
+		try {
+			end_mark = ImageIO.read(getClass().getResource("/models/end.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		this.xCoor = xCoor * GameFrame.gridscale;
+		this.yCoor = yCoor * GameFrame.gridscale;
+		width = GameFrame.gridscale;
+		height = GameFrame.gridscale;
+
+		end = false;
 		visited = false;
 
 	}
@@ -32,8 +41,7 @@ public class Cell {
 	public void draw(Graphics g) {
 
 		if (end) {
-			g.setColor(Color.BLUE);
-			g.fillRect(xCoor, yCoor, width, height);
+			g.drawImage(end_mark, xCoor, yCoor, null, null);
 		}
 
 		g.setColor(Color.BLACK);

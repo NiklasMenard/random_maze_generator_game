@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 
@@ -21,42 +22,50 @@ public class RenderPanel extends JPanel implements KeyListener, Runnable {
 	private Player player;
 	private MazeBuilder maze;
 
-	private int ticks = 0;
+	private int ticks;
+
+	private int end_coord_x;
+	private int end_coord_y;
 
 	public RenderPanel(int width, int height) {
 
 		this.width = width;
 		this.height = height;
 
+		ticks = 0;
+
 		setFocusable(true);
 		addKeyListener(this);
 		setPreferredSize(new Dimension(width, height));
 
 		maze = new MazeBuilder(width, height);
+		end_coord_x = maze.getEnd().getxCoor() / GameFrame.gridscale;
+		end_coord_y = maze.getEnd().getyCoor() / GameFrame.gridscale;
 
 		start();
 
 	}
 
-	public void tick() {
+	public void tick() throws IOException {
 
 		player = new Player(sxCoor, syCoor);
 		maze.drawMaze();
 
-		if (player.getxCoor() == maze.getEnd().getxCoor() / 40 && player.getyCoor() == maze.getEnd().getyCoor() / 40) {
+		// check if players has reached the end
+		if (player.getxCoor() == end_coord_x && player.getyCoor() == end_coord_y) {
 			stop();
 		}
 
 		ticks++;
 
-		if (ticks > 200000) {
-
+		if (ticks > 250000) {
+			ticks = 0;
 		}
 	}
 
 	public void paint(Graphics g) {
 
-		g.setColor(Color.WHITE);
+		g.setColor(Color.GRAY);
 		g.fillRect(0, 0, width, height);
 		player.draw(g);
 
@@ -69,7 +78,11 @@ public class RenderPanel extends JPanel implements KeyListener, Runnable {
 
 	public void run() {
 		while (running) {
-			tick();
+			try {
+				tick();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			repaint();
 		}
 	}
@@ -79,7 +92,6 @@ public class RenderPanel extends JPanel implements KeyListener, Runnable {
 		try {
 			thread.join();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
