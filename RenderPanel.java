@@ -51,16 +51,12 @@ public class RenderPanel extends JPanel implements KeyListener, Runnable {
 		player = new Player(sxCoor, syCoor);
 		maze.drawMaze();
 
-		// check if players has reached the end
-		if (player.getxCoor() == end_coord_x && player.getyCoor() == end_coord_y) {
-			stop();
-		}
-
 		ticks++;
 
 		if (ticks > 250000) {
 			ticks = 0;
 		}
+
 	}
 
 	public void paint(Graphics g) {
@@ -145,6 +141,11 @@ public class RenderPanel extends JPanel implements KeyListener, Runnable {
 
 		int x = player.getxCoor();
 		int y = player.getyCoor();
+
+		// check if players has reached the end
+		if (player.getxCoor() == end_coord_x && player.getyCoor() == end_coord_y) {
+			stop();
+		}
 
 		if (direction.equals("RIGHT")) {
 			if (maze.getCell_array()[x][y].isRight_wall()) {

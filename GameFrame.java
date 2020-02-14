@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 
 public class GameFrame {
 
-	public static final int gridscale = 50;
+	public static final int gridscale = 40;
 
 	private JFrame frame;
 	private RenderPanel renderpanel;

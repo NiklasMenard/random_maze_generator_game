@@ -14,7 +14,7 @@ public class Player {
 	public Player(int xCoor, int yCoor) {
 
 		try {
-			player_model = ImageIO.read(getClass().getResource("/models/player.png"));
+			player_model = ImageIO.read(getClass().getResource("/models/smile.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
