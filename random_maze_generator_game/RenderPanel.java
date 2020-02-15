@@ -145,7 +145,7 @@ public class RenderPanel extends JPanel implements KeyListener, Runnable {
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-
+		changeState();
 	}
 
 	public boolean checkIfCanMove(String direction) {
