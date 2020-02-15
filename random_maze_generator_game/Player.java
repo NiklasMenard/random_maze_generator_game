@@ -7,14 +7,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Player {
-
 	private int xCoor, yCoor, width, height;
-	private BufferedImage player_model;
+	private BufferedImage[] player_model = new BufferedImage[2];
 
 	public Player(int xCoor, int yCoor) {
 
 		try {
-			player_model = ImageIO.read(getClass().getResource("/models/smile.png"));
+			player_model[0] = ImageIO.read(getClass().getResource("/models/smile.png"));
+			player_model[1] = ImageIO.read(getClass().getResource("/models/end.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -26,9 +26,12 @@ public class Player {
 
 	}
 
-	public void draw(Graphics g) {
-
-		g.drawImage(player_model, xCoor * width, yCoor * height, null, null);
+	public void draw(Graphics g, int state) {
+		if(state == 0) {
+			g.drawImage(player_model[0], xCoor * width, yCoor * height, null, null);
+		} else if (state == 1) {
+			g.drawImage(player_model[1], xCoor * width, yCoor * height, null, null);
+		} 
 	}
 
 	public int getxCoor() {
@@ -46,5 +49,4 @@ public class Player {
 	public void setyCoor(int yCoor) {
 		this.yCoor = yCoor;
 	}
-
 }

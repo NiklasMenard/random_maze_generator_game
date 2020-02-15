@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 public class RenderPanel extends JPanel implements KeyListener, Runnable {
 
 	private int width, height;
+	private int state = 0;
 
 	private int sxCoor = 0, syCoor = 0;
 
@@ -26,7 +27,13 @@ public class RenderPanel extends JPanel implements KeyListener, Runnable {
 
 	private int end_coord_x;
 	private int end_coord_y;
-
+	private void changeState() {
+		if (state == 0) {
+			state = 1;
+	 	} else {
+			state = 0;
+		}
+	}
 	public RenderPanel(int width, int height) {
 
 		this.width = width;
@@ -63,7 +70,7 @@ public class RenderPanel extends JPanel implements KeyListener, Runnable {
 
 		g.setColor(Color.GRAY);
 		g.fillRect(0, 0, width, height);
-		player.draw(g);
+		player.draw(g, state);
 
 		for (int row = 0; row < maze.getCell_array().length; row++) {
 			for (int column = 0; column < maze.getCell_array()[row].length; column++) {
@@ -106,23 +113,27 @@ public class RenderPanel extends JPanel implements KeyListener, Runnable {
 		if (key == KeyEvent.VK_D) {
 			if (checkIfCanMove("RIGHT")) {
 				sxCoor++;
+				changeState();
 			}
 
 		}
 		if (key == KeyEvent.VK_A) {
 			if (checkIfCanMove("LEFT")) {
 				sxCoor--;
+				changeState();
 			}
 
 		}
 		if (key == KeyEvent.VK_W) {
 			if (checkIfCanMove("UP")) {
 				syCoor--;
+				changeState();
 			}
 		}
 		if (key == KeyEvent.VK_S) {
 			if (checkIfCanMove("DOWN")) {
 				syCoor++;
+				changeState();
 			}
 		}
 	}
@@ -173,4 +184,5 @@ public class RenderPanel extends JPanel implements KeyListener, Runnable {
 		return true;
 
 	}
+
 }
