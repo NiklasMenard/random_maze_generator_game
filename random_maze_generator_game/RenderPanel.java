@@ -27,12 +27,8 @@ public class RenderPanel extends JPanel implements KeyListener, Runnable {
 
 	private int end_coord_x;
 	private int end_coord_y;
-	private void changeState() {
-		if (state == 0) {
-			state = 1;
-	 	} else {
-			state = 0;
-		}
+	private void changeState(int s) {
+		state = s;
 	}
 	public RenderPanel(int width, int height) {
 
@@ -113,27 +109,27 @@ public class RenderPanel extends JPanel implements KeyListener, Runnable {
 		if (key == KeyEvent.VK_D) {
 			if (checkIfCanMove("RIGHT")) {
 				sxCoor++;
-				changeState();
+				changeState(1);
 			}
 
 		}
 		if (key == KeyEvent.VK_A) {
 			if (checkIfCanMove("LEFT")) {
 				sxCoor--;
-				changeState();
+				changeState(2);
 			}
 
 		}
 		if (key == KeyEvent.VK_W) {
 			if (checkIfCanMove("UP")) {
 				syCoor--;
-				changeState();
+				changeState(3);
 			}
 		}
 		if (key == KeyEvent.VK_S) {
 			if (checkIfCanMove("DOWN")) {
 				syCoor++;
-				changeState();
+				changeState(4);
 			}
 		}
 	}
@@ -145,7 +141,7 @@ public class RenderPanel extends JPanel implements KeyListener, Runnable {
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		changeState();
+		changeState(0);
 	}
 
 	public boolean checkIfCanMove(String direction) {
