@@ -64,7 +64,7 @@ public class Cell {
 	}
 
 	public boolean isVisited() {
-		return visited;
+		return !visited;
 	}
 
 	public void setVisited(boolean visited) {

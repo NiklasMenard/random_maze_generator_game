@@ -57,7 +57,7 @@ public class MazeBuilder {
 
 	public Cell checkNeighbours() {
 
-		ArrayList<Cell> neighbours = new ArrayList<Cell>();
+		ArrayList<Cell> neighbours = new ArrayList<>();
 
 		int current_x = current.getxCoor() / GameFrame.gridscale;
 		int current_y = current.getyCoor() / GameFrame.gridscale;
@@ -83,19 +83,19 @@ public class MazeBuilder {
 			left = cell_array[current_x - 1][current_y];
 		}
 
-		if (top != null && !top.isVisited()) {
+		if (top != null && top.isVisited()) {
 			neighbours.add(top);
 		}
 
-		if (right != null && !right.isVisited()) {
+		if (right != null && right.isVisited()) {
 			neighbours.add(right);
 		}
 
-		if (bottom != null && !bottom.isVisited()) {
+		if (bottom != null && bottom.isVisited()) {
 			neighbours.add(bottom);
 		}
 
-		if (left != null && !left.isVisited()) {
+		if (left != null && left.isVisited()) {
 			neighbours.add(left);
 		}
 
@@ -109,10 +109,7 @@ public class MazeBuilder {
 
 	public boolean inBounds(int x, int y) {
 
-		if (x < 0 || y < 0 || x > this.width - 1 || y > this.height - 1) {
-			return false;
-		}
-		return true;
+		return x >= 0 && y >= 0 && x <= this.width - 1 && y <= this.height - 1;
 	}
 
 	public void removeWall(Cell current, Cell next) {

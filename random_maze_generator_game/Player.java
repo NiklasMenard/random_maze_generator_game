@@ -7,17 +7,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Player {
+
 	private int xCoor, yCoor, width, height;
-	private BufferedImage[] player_model = new BufferedImage[5];
+	private BufferedImage player_model;
 
 	public Player(int xCoor, int yCoor) {
 
 		try {
-			player_model[0] = ImageIO.read(getClass().getResource("/models/stationary.png"));
-			player_model[1] = ImageIO.read(getClass().getResource("/models/right40.png"));
-			player_model[2] = ImageIO.read(getClass().getResource("/models/left40.png"));
-			player_model[3] = ImageIO.read(getClass().getResource("/models/up40.png"));
-			player_model[4] = ImageIO.read(getClass().getResource("/models/down40.png"));
+			player_model = ImageIO.read(getClass().getResource("/models/player.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -29,18 +26,9 @@ public class Player {
 
 	}
 
-	public void draw(Graphics g, int state) {
-		if(state == 0) {
-			g.drawImage(player_model[0], xCoor * width, yCoor * height, null, null);
-		} else if (state == 1) {
-			g.drawImage(player_model[1], xCoor * width, yCoor * height, null, null);
-		} else if (state == 2) {
-			g.drawImage(player_model[2], xCoor * width, yCoor * height, null, null);
-		} else if (state == 3) {
-			g.drawImage(player_model[3], xCoor * width, yCoor * height, null, null);
-		} else if (state == 4) {
-			g.drawImage(player_model[4], xCoor * width, yCoor * height, null, null);
-		} 
+	public void draw(Graphics g) {
+
+		g.drawImage(player_model, xCoor * width, yCoor * height, null, null);
 	}
 
 	public int getxCoor() {
@@ -58,4 +46,5 @@ public class Player {
 	public void setyCoor(int yCoor) {
 		this.yCoor = yCoor;
 	}
+
 }
