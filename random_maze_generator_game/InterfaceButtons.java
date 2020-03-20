@@ -14,48 +14,48 @@ import javax.swing.JPanel;
 
 public class InterfaceButtons {
 
-	private JButton startgame;
+    private JButton startgame;
 
-	public JButton getMenuButton(String buttonName) {
+    public JButton getMenuButton(String buttonName) {
 
-		JButton button = new JButton(buttonName);
-		button.setBackground(new Color(25, 209, 203));
+        JButton button = new JButton(buttonName);
+        button.setBackground(new Color(25, 209, 203));
 
-		return button;
+        return button;
 
-	}
+    }
 
-	public JPanel createIcons() {
+    public JPanel createIcons() {
 
-		List<JButton> components = new ArrayList<>();
+        List<JButton> components = new ArrayList<>();
 
-		JButton help = new JButton();
-		JButton cog = new JButton();
+        JButton help = new JButton();
+        JButton cog = new JButton();
 
-		components.add(help);
-		components.add(cog);
+        components.add(help);
+        components.add(cog);
 
-		for (JButton component : components) {
-			component.setBackground(new Color(140, 136, 136));
-			component.setBorderPainted(false);
-			component.setPreferredSize(new Dimension(40, 40));
-		}
+        for (JButton component : components) {
+            component.setBackground(new Color(140, 136, 136));
+            component.setBorderPainted(false);
+            component.setPreferredSize(new Dimension(40, 40));
+        }
 
-		try {
-			Image qimg = ImageIO.read(getClass().getResource("/models/question.png"));
-			Image cogimg = ImageIO.read(getClass().getResource("/models/settings.png"));
-			cog.setIcon(new ImageIcon(cogimg));
-			help.setIcon(new ImageIcon(qimg));
+        try {
+            Image qimg = ImageIO.read(getClass().getResource("/models/question.png"));
+            Image cogimg = ImageIO.read(getClass().getResource("/models/settings.png"));
+            cog.setIcon(new ImageIcon(cogimg));
+            help.setIcon(new ImageIcon(qimg));
 
-		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
-		}
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
 
-		JPanel icons = new JPanel();
-		icons.setLayout(new BoxLayout(icons, BoxLayout.X_AXIS));
-		icons.add(help);
-		icons.add(cog);
+        JPanel icons = new JPanel();
+        icons.setLayout(new BoxLayout(icons, BoxLayout.X_AXIS));
+        icons.add(help);
+        icons.add(cog);
 
-		return icons;
-	}
+        return icons;
+    }
 }

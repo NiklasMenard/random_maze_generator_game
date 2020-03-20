@@ -2,7 +2,7 @@ package random_maze_generator_game;
 
 import javax.swing.*;
 
-public class GameFrame extends JFrame{
+public class GameFrame extends JFrame {
 
     public static final int gridscale = 40;
 

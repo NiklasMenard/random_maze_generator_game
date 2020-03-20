@@ -1,64 +1,72 @@
 package random_maze_generator_game;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 
-import javax.swing.JPanel;
+public class GamePanel extends JPanel implements KeyListener, Runnable {
 
+    private int width, height;
+    private int sxCoor = 0, syCoor = 0;
 
-public class GamePanel extends JPanel implements KeyListener {
-
+    private Thread thread;
+    private boolean running = false;
 
     private Player player;
     private MazeBuilder maze;
+    private CardLayout cardLayout;
+    private ViewUpdate parent;
+    private MenuPanel menupanel;
 
     private int ticks;
     private int end_coord_x;
     private int end_coord_y;
-    private int width, height;
-    private int sxCoor = 0, syCoor = 0;
-
-    private boolean hasEnded = false;
 
     public GamePanel(int width, int height) {
+
 
         this.width = width;
         this.height = height;
 
         ticks = 0;
 
-        setFocusable(true);
         addKeyListener(this);
         setPreferredSize(new Dimension(width, height));
+
         maze = new MazeBuilder(width, height);
+        player = new Player(0, 0);
         end_coord_x = maze.getEnd().getxCoor() / GameFrame.gridscale;
         end_coord_y = maze.getEnd().getyCoor() / GameFrame.gridscale;
 
-
     }
-
 
     public void tick() throws IOException {
 
-
         player = new Player(sxCoor, syCoor);
+        maze.drawMaze();
 
-        if (player.getxCoor() == end_coord_x && player.getyCoor() == end_coord_y) {
-            maze = new MazeBuilder(width, height);
-            hasEnded = true;
+        if (sxCoor == end_coord_x && syCoor == end_coord_y) {
+            sxCoor = 0;
+            syCoor = 0;
+            cardLayout.show(parent, "MENUPANEL");
+            menupanel.requestFocusInWindow();
+            resetGame();
         }
 
-        maze.drawMaze();
 
         ticks++;
 
         if (ticks > 250000) {
             ticks = 0;
         }
+
+    }
+
+    public void resetGame() {
+        this.player = new Player(0, 0);
+        this.maze = new MazeBuilder(width, height);
     }
 
     @Override
@@ -75,6 +83,33 @@ public class GamePanel extends JPanel implements KeyListener {
         }
     }
 
+    @Override
+    public void run() {
+        while (running) {
+            try {
+                tick();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            repaint();
+        }
+    }
+
+    public void start() {
+
+        running = true;
+        thread = new Thread(this);
+        thread.start();
+    }
+
+    public void stop() {
+        running = false;
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void keyPressed(KeyEvent event) {
@@ -103,6 +138,16 @@ public class GamePanel extends JPanel implements KeyListener {
                 syCoor++;
             }
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent arg0) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent arg0) {
+
     }
 
     public boolean checkIfCanMove(String direction) {
@@ -136,17 +181,17 @@ public class GamePanel extends JPanel implements KeyListener {
 
     }
 
-    @Override
-    public void keyTyped(KeyEvent arg0) {
-
+    public void setParent(ViewUpdate parent) {
+        this.parent = parent;
     }
 
-    @Override
-    public void keyReleased(KeyEvent arg0) {
-
+    public void setCardLayout(CardLayout cardLayout) {
+        this.cardLayout = cardLayout;
     }
 
-    public boolean hasEnded() {
-        return hasEnded;
+    public void setMenuPanel(MenuPanel MenuPanel) {
+        this.menupanel = MenuPanel;
     }
+
+
 }

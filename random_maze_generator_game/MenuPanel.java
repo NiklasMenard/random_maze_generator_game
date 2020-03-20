@@ -20,14 +20,16 @@ public class MenuPanel extends JPanel implements ActionListener {
     private JButton startgame;
     private JButton settings;
     private JButton exit;
-    private GameState gameState;
+    private CardLayout cardLayout;
+    private ViewUpdate parent;
+    private GamePanel gamepanel;
 
     public MenuPanel(int width, int height) {
 
-        gameState = GameState.MENU;
         interfacebuttons = new InterfaceButtons();
         setPreferredSize(new Dimension(width, height));
         setBackground(new Color(140, 136, 136));
+        setFocusable(true);
 
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -97,16 +99,28 @@ public class MenuPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == startgame) {
-            gameState = GameState.GAME;
+            cardLayout.show(parent, "GAMEPANEL");
+            gamepanel.requestFocusInWindow();
+            gamepanel.start();
+            System.out.print("Start game pressed");
+
         } else if (e.getSource() == settings) {
-            gameState = GameState.GAME;
+
         } else if (e.getSource() == exit) {
-            gameState = GameState.EXIT;
+            System.exit(0);
         }
     }
 
-    public GameState getGameState() {
-        return gameState;
+    public void setParent(ViewUpdate parent){
+        this.parent = parent;
+    }
+
+    public void setCardLayout (CardLayout cardLayout){
+        this.cardLayout = cardLayout;
+    }
+
+    public void setGamepanel (GamePanel GamePanel){
+        this.gamepanel = GamePanel;
     }
 
 }
