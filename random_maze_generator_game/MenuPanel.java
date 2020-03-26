@@ -1,34 +1,24 @@
 package random_maze_generator_game;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 
-public class MenuPanel extends JPanel implements ActionListener {
+public class MenuPanel extends JPanel implements ActionListener, ViewPanel {
 
-    private InterfaceButtons interfacebuttons;
-    private JLabel gametitle;
-    private JButton startgame;
-    private JButton settings;
-    private JButton exit;
+    private InterfaceElements interfaceElements;
     private CardLayout cardLayout;
     private ViewUpdate parent;
-    private GamePanel gamepanel;
 
     public MenuPanel(int width, int height) {
 
-        interfacebuttons = new InterfaceButtons();
+        interfaceElements = new InterfaceElements();
         setPreferredSize(new Dimension(width, height));
-        setBackground(new Color(140, 136, 136));
+        setBackground(interfaceElements.getMainPanelColor());
         setFocusable(true);
 
         setLayout(new GridBagLayout());
@@ -39,7 +29,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         c.weightx = 1;
         c.weighty = 1;
         c.anchor = GridBagConstraints.NORTHEAST;
-        add(interfacebuttons.createIcons(), c);
+        add(interfaceElements.getIcons(this), c);
 
         c.gridx = 1;
         c.gridy = 1;
@@ -50,33 +40,31 @@ public class MenuPanel extends JPanel implements ActionListener {
 
     }
 
+
     private JPanel createMenuPanel() {
 
         List<JComponent> components = new ArrayList<>();
 
-        JPanel buttons = new JPanel();
-        buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
-        buttons.setBackground(new Color(140, 136, 136));
+        JPanel buttons = interfaceElements.getBoxJPanel("Y");
 
-        gametitle = new JLabel();
+        JLabel gametitle = new JLabel();
         gametitle.setFont(new Font("Apple Casual", Font.BOLD, 32));
         gametitle.setText("The Maze");
 
-
-        startgame = interfacebuttons.getMenuButton("Startgame");
-        settings = interfacebuttons.getMenuButton("Settings");
-        exit = interfacebuttons.getMenuButton("Exit");
+        JButton startgame = interfaceElements.getButton("Start Game");
+        JButton leaderboard = interfaceElements.getButton("Leaderboard");
+        JButton exit = interfaceElements.getButton("Exit");
 
         startgame.addActionListener(this);
-        settings.addActionListener(this);
+        leaderboard.addActionListener(this);
         exit.addActionListener(this);
 
         components.add(gametitle);
         components.add(startgame);
-        components.add(settings);
+        components.add(leaderboard);
         components.add(exit);
 
-        Dimension d = startgame.getMaximumSize();
+        Dimension d = leaderboard.getMaximumSize();
         for (JComponent component : components) {
             if (component == components.get(0)) {
                 //setting title
@@ -98,29 +86,41 @@ public class MenuPanel extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == startgame) {
-            cardLayout.show(parent, "GAMEPANEL");
-            gamepanel.requestFocusInWindow();
-            gamepanel.start();
-            System.out.print("Start game pressed");
+        String pressed = e.getActionCommand();
 
-        } else if (e.getSource() == settings) {
+        if (pressed.equals("Start Game")) {
+            cardLayout.show(parent, "GamePanel");
+            parent.startGame();
+        }
 
-        } else if (e.getSource() == exit) {
+        if (pressed.equals("Leaderboard")) {
+            cardLayout.show(parent, "LeaderBoardsPanel");
+        }
+
+        if (pressed.equals("Settings")) {
+            cardLayout.show(parent, "SettingsPanel");
+            parent.setSettingsPressed(getClass().getSimpleName());
+        }
+
+        if (pressed.equals("Help")) {
+            parent.showHelpDialog();
+        }
+
+        if (pressed.equals("Exit")) {
             System.exit(0);
         }
     }
 
-    public void setParent(ViewUpdate parent){
+    public void setParent(ViewUpdate parent) {
         this.parent = parent;
     }
 
-    public void setCardLayout (CardLayout cardLayout){
+    public void setCardLayout(CardLayout cardLayout) {
         this.cardLayout = cardLayout;
     }
 
-    public void setGamepanel (GamePanel GamePanel){
-        this.gamepanel = GamePanel;
+    public void addToCard() {
+        parent.add(this, this.getClass().getSimpleName());
     }
 
 }

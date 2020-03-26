@@ -7,19 +7,18 @@ import java.io.IOException;
 
 public class Cell {
 
+    private static int gridscale = 40;
     private int xCoor, yCoor, width, height;
-
     private boolean top_wall = true;
     private boolean right_wall = true;
     private boolean bottom_wall = true;
     private boolean left_wall = true;
-
     private boolean end;
     private boolean visited;
-
     private BufferedImage end_mark;
 
     public Cell(int xCoor, int yCoor) {
+
 
         try {
             end_mark = ImageIO.read(getClass().getResource("/models/end.png"));
@@ -27,10 +26,10 @@ public class Cell {
             e.printStackTrace();
         }
 
-        this.xCoor = xCoor * GameFrame.gridscale;
-        this.yCoor = yCoor * GameFrame.gridscale;
-        width = GameFrame.gridscale;
-        height = GameFrame.gridscale;
+        this.xCoor = xCoor * gridscale;
+        this.yCoor = yCoor * gridscale;
+        width = gridscale;
+        height = gridscale;
 
         end = false;
         visited = false;
@@ -78,38 +77,38 @@ public class Cell {
         return yCoor;
     }
 
-    // set walls
-    public void setTop_wall(boolean top_wall) {
-        this.top_wall = top_wall;
-    }
-
-    public void setRight_wall(boolean right_wall) {
-        this.right_wall = right_wall;
-    }
-
-    public void setBottom_wall(boolean bottom_wall) {
-        this.bottom_wall = bottom_wall;
-    }
-
-    public void setLeft_wall(boolean left_wall) {
-        this.left_wall = left_wall;
-    }
-
     // get walls
     public boolean isTop_wall() {
         return top_wall;
+    }
+
+    // set walls
+    public void setTop_wall(boolean top_wall) {
+        this.top_wall = top_wall;
     }
 
     public boolean isRight_wall() {
         return right_wall;
     }
 
+    public void setRight_wall(boolean right_wall) {
+        this.right_wall = right_wall;
+    }
+
     public boolean isBottom_wall() {
         return bottom_wall;
     }
 
+    public void setBottom_wall(boolean bottom_wall) {
+        this.bottom_wall = bottom_wall;
+    }
+
     public boolean isLeft_wall() {
         return left_wall;
+    }
+
+    public void setLeft_wall(boolean left_wall) {
+        this.left_wall = left_wall;
     }
 
     // set as ending cell

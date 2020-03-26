@@ -1,33 +1,31 @@
 package random_maze_generator_game;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public class Player {
 
-    private int xCoor, yCoor, width, height;
+    private static int gridscale = 40;
+    private int xCoor, yCoor;
     private BufferedImage player_model;
+    private InterfaceElements interfaceElements;
+
 
     public Player(int xCoor, int yCoor) {
 
-        try {
-            player_model = ImageIO.read(getClass().getResource("/models/player.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        gridscale = 40;
+
+        interfaceElements = new InterfaceElements();
+        player_model = interfaceElements.getPlayerModel();
 
         this.xCoor = xCoor;
         this.yCoor = yCoor;
-        width = GameFrame.gridscale;
-        height = GameFrame.gridscale;
 
     }
 
     public void draw(Graphics g) {
 
-        g.drawImage(player_model, xCoor * width, yCoor * height, null, null);
+        g.drawImage(player_model, xCoor * gridscale, yCoor * gridscale, null, null);
     }
 
     public int getxCoor() {
@@ -36,11 +34,6 @@ public class Player {
 
     public int getyCoor() {
         return yCoor;
-    }
-
-    public void refreshLocation(int x, int y){
-        this.xCoor = x;
-        this.yCoor = y;
     }
 
 }

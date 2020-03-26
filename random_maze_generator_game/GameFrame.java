@@ -4,17 +4,12 @@ import javax.swing.*;
 
 public class GameFrame extends JFrame {
 
-    public static final int gridscale = 40;
-
     private ViewUpdate viewUpdate;
 
-
     public GameFrame() {
-
-        viewUpdate = new ViewUpdate(gridscale * 10, gridscale * 10);
+        viewUpdate = new ViewUpdate(400, 425);
 
     }
-
     public void start() {
 
         add(viewUpdate);

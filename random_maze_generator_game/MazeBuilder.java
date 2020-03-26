@@ -6,21 +6,21 @@ import java.util.Stack;
 
 public class MazeBuilder {
 
+    private static int gridscale = 40;
     private int width, height;
-
     private Cell[][] cell_array;
     private Stack<Cell> cell_stack;
-
     private Cell current;
     private Cell next;
     private Cell end;
-
     private Random rand;
+
 
     public MazeBuilder(int width, int height) {
 
-        this.width = width / GameFrame.gridscale;
-        this.height = height / GameFrame.gridscale;
+
+        this.width = width / gridscale;
+        this.height = height / gridscale;
 
         cell_stack = new Stack<>();
         cell_array = new Cell[this.width][this.height];
@@ -59,8 +59,8 @@ public class MazeBuilder {
 
         ArrayList<Cell> neighbours = new ArrayList<>();
 
-        int current_x = current.getxCoor() / GameFrame.gridscale;
-        int current_y = current.getyCoor() / GameFrame.gridscale;
+        int current_x = current.getxCoor() / gridscale;
+        int current_y = current.getyCoor() / gridscale;
 
         Cell top = null;
         Cell right = null;
@@ -114,8 +114,8 @@ public class MazeBuilder {
 
     public void removeWall(Cell current, Cell next) {
 
-        int removeXwall = (current.getxCoor() / GameFrame.gridscale) - (next.getxCoor() / GameFrame.gridscale);
-        int removeYwall = (current.getyCoor() / GameFrame.gridscale) - (next.getyCoor() / GameFrame.gridscale);
+        int removeXwall = (current.getxCoor() / gridscale) - (next.getxCoor() / gridscale);
+        int removeYwall = (current.getyCoor() / gridscale) - (next.getyCoor() / gridscale);
 
         if (removeXwall == 1) {
             current.setLeft_wall(false);
@@ -141,8 +141,14 @@ public class MazeBuilder {
         return cell_array;
     }
 
-    public Cell getEnd() {
-        return end;
+    public int getEndX() {
+
+        return end.getxCoor() / gridscale;
+    }
+
+    public int getEndY() {
+
+        return end.getxCoor() / gridscale;
     }
 
 }
