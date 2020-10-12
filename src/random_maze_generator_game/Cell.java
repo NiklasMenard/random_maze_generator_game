@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+//Cell class that has four sides drawn. Maze consists of cells.
+//Boolean for visited or not.
 public class Cell {
 
     private static int gridscale = 40;
@@ -36,6 +38,7 @@ public class Cell {
 
     }
 
+    //Draw function to draw the walls
     public void draw(Graphics g) {
 
         if (end) {
@@ -61,6 +64,7 @@ public class Cell {
         }
     }
 
+    //visited boolean used for the maze generate function
     public boolean isVisited() {
         return !visited;
     }

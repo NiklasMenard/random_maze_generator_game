@@ -6,6 +6,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 
+
+//Class that paints the created maze and player movement. Uses a tick function to
+//update the movement and check game logic.
 public class GameRenderPanel extends JPanel implements KeyListener, Runnable {
 
 
@@ -15,10 +18,11 @@ public class GameRenderPanel extends JPanel implements KeyListener, Runnable {
     private GamePanel parent;
 
     private int ticks;
-    private int end_coord_x;
-    private int end_coord_y;
-    private int width, height;
-    private int sxCoor = 0, syCoor = 0;
+    private final int end_coord_x;
+    private final int end_coord_y;
+    private final int width;
+    private final int height;
+    private int pXcoor = 0, pYcoor = 0;
 
     private Boolean paused = false;
     private boolean running = false;
@@ -36,17 +40,22 @@ public class GameRenderPanel extends JPanel implements KeyListener, Runnable {
         player = new Player(0, 0);
         end_coord_x = maze.getEndX();
         end_coord_y = maze.getEndY();
-
+        setBorder(BorderFactory.createLineBorder(Color.black));
 
     }
 
+    //basic tick method to check game logic and update the view
     public void tick() throws IOException {
 
-        player = new Player(sxCoor, syCoor);
+        //update player and maze
+        player = new Player(pXcoor, pYcoor);
         maze.drawMaze();
 
-        if (sxCoor == end_coord_x && syCoor == end_coord_y) {
+        //check if player has made it to the end and if so reset the game
+        //and return to menu and show win dialog
+        if (pXcoor == end_coord_x && pYcoor == end_coord_y) {
             parent.returnToMenu();
+            parent.showWinDialog();
             resetGame();
         }
 
@@ -57,14 +66,16 @@ public class GameRenderPanel extends JPanel implements KeyListener, Runnable {
         }
     }
 
+    //function reset coordinates, create new player and new maze
     public void resetGame() {
-        sxCoor = 0;
-        syCoor = 0;
-        player = new Player(sxCoor, syCoor);
+        pXcoor = 0;
+        pYcoor = 0;
+        player = new Player(pXcoor, pYcoor);
         maze = new MazeBuilder(width, height);
         stop();
     }
 
+    //method to paint all elements from gamepanel (player, maze, colors etc.)
     @Override
     public void paint(Graphics g) {
 
@@ -91,6 +102,7 @@ public class GameRenderPanel extends JPanel implements KeyListener, Runnable {
         }
     }
 
+    //create new game thread
     public void start() {
         running = true;
         thread = new Thread(this);
@@ -106,6 +118,8 @@ public class GameRenderPanel extends JPanel implements KeyListener, Runnable {
         }
     }
 
+    //method that increases player X coordinate by one if moving left
+    //or right. Y coordinate if moving down or up
     @Override
     public void keyPressed(KeyEvent event) {
 
@@ -113,24 +127,24 @@ public class GameRenderPanel extends JPanel implements KeyListener, Runnable {
 
         if (key == KeyEvent.VK_D) {
             if (checkIfCanMove("RIGHT")) {
-                sxCoor++;
+                pXcoor++;
             }
 
         }
         if (key == KeyEvent.VK_A) {
             if (checkIfCanMove("LEFT")) {
-                sxCoor--;
+                pXcoor--;
             }
 
         }
         if (key == KeyEvent.VK_W) {
             if (checkIfCanMove("UP")) {
-                syCoor--;
+                pYcoor--;
             }
         }
         if (key == KeyEvent.VK_S) {
             if (checkIfCanMove("DOWN")) {
-                syCoor++;
+                pYcoor++;
             }
         }
     }
@@ -144,7 +158,8 @@ public class GameRenderPanel extends JPanel implements KeyListener, Runnable {
     public void keyReleased(KeyEvent arg0) {
 
     }
-
+    //method that is called everytime a keypressed event happes. Checks
+    //if there is a wall in the direction the player is moving
     public boolean checkIfCanMove(String direction) {
 
         int x = player.getxCoor();

@@ -4,16 +4,20 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
 
+//Class that generates the maze randomly. Algorithm removes walls randomly from
+//neighbouring cells. When all neighbouring cells have been visited it goes back
+//to a cell that has not yet been visited and continues from there (DFS)
+// Algorithm stops when all cells have been visited.
 public class MazeBuilder {
 
-    private static int gridscale = 40;
-    private int width, height;
-    private Cell[][] cell_array;
-    private Stack<Cell> cell_stack;
+    private static final int gridscale = 40;
+    private final int width;
+    private final int height;
+    private final Cell[][] cell_array;
+    private final Stack<Cell> cell_stack;
     private Cell current;
-    private Cell next;
-    private Cell end;
-    private Random rand;
+    private final Cell end;
+    private final Random rand;
 
 
     public MazeBuilder(int width, int height) {
@@ -42,7 +46,7 @@ public class MazeBuilder {
 
     public void drawMaze() {
 
-        next = checkNeighbours();
+        Cell next = checkNeighbours();
         if (next != null) {
 
             next.setVisited(true);

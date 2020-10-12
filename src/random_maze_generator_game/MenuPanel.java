@@ -10,7 +10,7 @@ import java.util.List;
 
 public class MenuPanel extends JPanel implements ActionListener, ViewPanel {
 
-    private InterfaceElements interfaceElements;
+    private final InterfaceElements interfaceElements;
     private CardLayout cardLayout;
     private ViewUpdate parent;
 

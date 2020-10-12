@@ -6,9 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
+
+//Leaderboard panel that shows the current leading scores. Scoretable functionality
+//hasnt been added yet. Uses gridbag layout.
 public class LeaderBoardsPanel extends JPanel implements ActionListener, ViewPanel {
 
-    private InterfaceElements interfaceElements;
+    private final InterfaceElements interfaceElements;
     private CardLayout cardLayout;
     private ViewUpdate parent;
 

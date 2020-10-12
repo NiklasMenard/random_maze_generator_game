@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+//Class that has several GUI elements that different classes can
+//use to get similar elements
 public class InterfaceElements {
 
     public JButton getButton(String buttonName) {

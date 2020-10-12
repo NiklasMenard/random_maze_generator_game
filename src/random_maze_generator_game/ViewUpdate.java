@@ -5,17 +5,15 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//Class that controls which panel is currently being shown. Uses cardlayout.
 public class ViewUpdate extends JPanel {
 
-    private MenuPanel menupanel;
-    private LeaderBoardsPanel leaderboardsPanel;
     private GamePanel gamepanel;
-    private SettingsPanel settingsPanel;
-    private CardLayout cardLayout;
-    private List<ViewPanel> panels;
+    private final CardLayout cardLayout;
+    private final List<ViewPanel> panels;
 
-    private int width, height;
+    private final int width;
+    private final int height;
     private String settingspressed;
 
 
@@ -36,9 +34,9 @@ public class ViewUpdate extends JPanel {
     private void setupPanels() {
 
         gamepanel = new GamePanel(width, height);
-        menupanel = new MenuPanel(width, height);
-        leaderboardsPanel = new LeaderBoardsPanel(width, height);
-        settingsPanel = new SettingsPanel(width, height);
+        MenuPanel menupanel = new MenuPanel(width, height);
+        LeaderBoardsPanel leaderboardsPanel = new LeaderBoardsPanel(width, height);
+        SettingsPanel settingsPanel = new SettingsPanel(width, height);
 
         panels.add(menupanel);
         panels.add(gamepanel);
@@ -52,6 +50,7 @@ public class ViewUpdate extends JPanel {
         }
     }
 
+    //function that is called from menupanel to start the game
     public void startGame() {
         gamepanel.start();
     }
@@ -67,9 +66,10 @@ public class ViewUpdate extends JPanel {
         this.settingspressed = settingspressed;
     }
 
+    //shows help dialog when help icon is pressed in any panel
     public void showHelpDialog(){
-
-        JOptionPane.showMessageDialog(null, "Solve the maze\n\nUse W,A,S,D to move\n");
-
+        String text = "Solve the maze as fast as possible\n\nUse W,A,S,D to move\n";
+        JOptionPane.showMessageDialog(null, text);
     }
+
 }

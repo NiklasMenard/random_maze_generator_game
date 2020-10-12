@@ -5,12 +5,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//Gamepanel that contains the button panel on top and gamerender panel on the
+//bottom. ViewUpdate is parent and button functionality controls how the game
+//is managed (restart, pause, back to menu, help). Uses gridbaglayout
 public class GamePanel extends JPanel implements ViewPanel, ActionListener {
 
-    private GameRenderPanel gameRenderPanel;
+    private final GameRenderPanel gameRenderPanel;
     private CardLayout cardLayout;
     private ViewUpdate parent;
-    private InterfaceElements interfaceElements;
+    private final InterfaceElements interfaceElements;
 
     public GamePanel(int width, int height) {
 
@@ -25,26 +28,27 @@ public class GamePanel extends JPanel implements ViewPanel, ActionListener {
         gameRenderPanel.setParent(this);
 
         c.gridx = 1;
-        c.gridy = 0;
+        c.gridy = 1;
         c.weightx = 1;
         c.weighty = 1;
-        c.anchor = GridBagConstraints.CENTER;
-        c.fill = GridBagConstraints.VERTICAL;
+        c.anchor = GridBagConstraints.NORTH;
         add(setUpTopPanel(), c);
 
         c.gridx = 1;
         c.gridy = 1;
         c.weightx = 1;
         c.weighty = 1;
-        c.anchor = GridBagConstraints.CENTER;
+        c.anchor = GridBagConstraints.SOUTH;
         add(gameRenderPanel, c);
-
-
     }
 
     private JPanel setUpTopPanel() {
 
         JPanel pane = interfaceElements.getBoxJPanel("X");
+
+        //timer has not yet been implemented
+        JLabel timer = new JLabel();
+        timer.setText("00:00    ");
 
         JButton pause = interfaceElements.getButton("Pause");
         pause.addActionListener(this);
@@ -58,6 +62,7 @@ public class GamePanel extends JPanel implements ViewPanel, ActionListener {
         JButton help = interfaceElements.getButton("?");
         help.addActionListener(this);
 
+        pane.add(timer);
         pane.add(pause);
         pane.add(restart);
         pane.add(menu);
@@ -103,6 +108,11 @@ public class GamePanel extends JPanel implements ViewPanel, ActionListener {
             parent.showHelpDialog();
             gameRenderPanel.requestFocusInWindow();
         }
+    }
+
+    public void showWinDialog(){
+        String text = "You made it!";
+        JOptionPane.showMessageDialog(null, text);
     }
 
     public void setParent(ViewUpdate parent) {

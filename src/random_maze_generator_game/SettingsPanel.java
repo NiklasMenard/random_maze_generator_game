@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 public class SettingsPanel extends JPanel implements ActionListener, ViewPanel {
 
-    private InterfaceElements interfaceElements;
+    private final InterfaceElements interfaceElements;
     private CardLayout cardLayout;
     private ViewUpdate parent;
 

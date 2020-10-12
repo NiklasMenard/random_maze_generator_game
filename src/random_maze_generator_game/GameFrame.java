@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class GameFrame extends JFrame {
 
-    private ViewUpdate viewUpdate;
+    private final ViewUpdate viewUpdate;
 
     public GameFrame() {
         viewUpdate = new ViewUpdate(400, 425);
